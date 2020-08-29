@@ -10,9 +10,5 @@ class ApplicationTests {
     @Autowired
     RecipeService recipeService;
 
-    @Test
-    void contextLoads() {
-        System.out.println((recipeService.getRecipeByName(("Przepis 0"))));
-    }
 
 }

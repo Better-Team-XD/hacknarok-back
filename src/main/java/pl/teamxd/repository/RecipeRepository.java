@@ -9,8 +9,5 @@ import java.util.List;
 
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
-    List<Recipe> findByName(String name);
-    List<Recipe> findByCategory(String category);
-    @Query(value = "select r from Recipe r where r.category = ?1")
-    List<Recipe> findRecipeByCategory(String category);
+    List<Recipe> findAllByCategory(String category);
 }

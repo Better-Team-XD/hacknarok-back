@@ -5,8 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.teamxd.model.Recipe;
 import pl.teamxd.repository.RecipeRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -17,20 +16,23 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
-    public Optional<Recipe> getRecipeById(Long id) {
-        return recipeRepository.findById(id);
+    public List<Recipe> getRecipesMatching(List<String> ingredients, String category){
+        List<Recipe> recipes = recipeRepository.findAllByCategory(category);
+        List<Recipe> result = new ArrayList<>();
+
+        for (Recipe recipe : recipes){
+            int matches = 0;
+            for (String ingredient : ingredients){
+                if (recipe.getIngredients().contains(ingredient)){
+                    System.out.println(recipe.getIngredients());
+                    matches++;
+                }
+            }
+
+            if  (Math.abs((double) (matches / recipe.getIngredients().size()) - 1) < 1e-10){
+                result.add(recipe);
+            }
+        }
+        return result;
     }
-
-    public List<Recipe> getRecipeByName(String name) {
-        return recipeRepository.findByName(name);
-    }
-
-    public List<Recipe> getRecipesByCategory(String category) {
-        return recipeRepository.findRecipeByCategory(category);
-    }
-
-//    public List<Recipe> getRecipesByIngredients() {
-//        List<Recipe> recipes = recipeRepository.findAll();
-//    }
-
 }

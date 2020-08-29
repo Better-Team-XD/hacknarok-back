@@ -1,10 +1,7 @@
 package pl.teamxd.model;
 
 import com.sun.istack.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode
 @Getter
 public class Recipe {
     @Id
@@ -36,8 +34,8 @@ public class Recipe {
     @NonNull
     private String imgUrl;
 
-    @ElementCollection
-    private Set<String> ingredients = new HashSet<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    private final Set<String> ingredients = new HashSet<>();
 
     public void addIngredients(Collection<String> ingredients) {
         this.ingredients.addAll(ingredients);
