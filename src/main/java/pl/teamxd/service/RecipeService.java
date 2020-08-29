@@ -1,30 +1,17 @@
 package pl.teamxd.service;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.teamxd.model.Recipe;
-import pl.teamxd.repository.IngredientRepository;
 import pl.teamxd.repository.RecipeRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RecipeService {
-    private RecipeRepository recipeRepository;
-    private IngredientRepository ingredientRepository;
-
-    @Autowired
-    public void setRecipeRepository(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
-    }
-
-    public void setIngredientRepository(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
-    }
+    private final RecipeRepository recipeRepository;
 
     public Recipe addRecipe(Recipe recipe) {
         return recipeRepository.save(recipe);
@@ -38,8 +25,12 @@ public class RecipeService {
         return recipeRepository.findByName(name);
     }
 
-    public List<Recipe> getRecipeByCategory(String category) {
+    public List<Recipe> getRecipesByCategory(String category) {
         return recipeRepository.findRecipeByCategory(category);
     }
+
+//    public List<Recipe> getRecipesByIngredients() {
+//        List<Recipe> recipes = recipeRepository.findAll();
+//    }
 
 }

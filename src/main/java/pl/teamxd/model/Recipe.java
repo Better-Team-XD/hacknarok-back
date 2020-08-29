@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,11 +36,11 @@ public class Recipe {
     @NonNull
     private String imgUrl;
 
-    @ManyToMany
-    private Set<Ingredient> ingredients = new HashSet<>();
+    @ElementCollection
+    private Set<String> ingredients = new HashSet<>();
 
-    public void addIngredient(Ingredient ingredient) {
-        this.ingredients.add(ingredient);
+    public void addIngredients(Collection<String> ingredients) {
+        this.ingredients.addAll(ingredients);
     }
 
 }
