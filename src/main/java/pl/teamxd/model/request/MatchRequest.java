@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.teamxd.model.Ingredient;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class MatchRequest {
-    private List<String> ingredients;
+    private List<Ingredient> ingredients;
     private String category;
 
 }

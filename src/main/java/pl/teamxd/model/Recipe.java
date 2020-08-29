@@ -1,18 +1,20 @@
 package pl.teamxd.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode
 @Getter
+@Setter
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,11 +36,35 @@ public class Recipe {
     @NonNull
     private String imgUrl;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private final Set<String> ingredients = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Ingredient> ingredients = new HashSet<>();
 
-    public void addIngredients(Collection<String> ingredients) {
-        this.ingredients.addAll(ingredients);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return Objects.equals(id, recipe.id) &&
+                Objects.equals(name, recipe.name) &&
+                Objects.equals(category, recipe.category) &&
+                Objects.equals(url, recipe.url) &&
+                Objects.equals(imgUrl, recipe.imgUrl);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, category, url, imgUrl);
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", url='" + url + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
+    }
 }

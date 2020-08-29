@@ -2,33 +2,33 @@ package pl.teamxd.repository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import pl.teamxd.model.Ingredient;
 import pl.teamxd.model.Recipe;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 
 @Component
 @AllArgsConstructor
 public class MockData {
     private final RecipeRepository recipeRepository;
+    private final IngredientRepository ingredientRepository;
 
     @PostConstruct
     public void mockDataInit() {
+        Ingredient ingredient = null;
         Recipe recipe = null;
-        Recipe recipe1 = new Recipe("Przepis 1", "kategoria", "url", "imgUrl");
-        recipeRepository.save(recipe1);
-        recipe1.addIngredients(Arrays.asList("A", "B", "C"));
-        recipeRepository.save(recipe1);
-
-        Recipe recipe2 = new Recipe("Przepis 2", "kategoria", "url", "imgUrl");
-        recipeRepository.save(recipe2);
-        recipe2.addIngredients(Arrays.asList("A", "B"));
-        recipeRepository.save(recipe2);
-
-        Recipe recipe3 = new Recipe("Przepis 3", "kategoria", "url", "imgUrl");
-        recipeRepository.save(recipe3);
-        recipe3.addIngredients(Arrays.asList("A", "B", "D"));
-        recipeRepository.save(recipe3);
+        for (int i = 0; i < 5; i++) {
+            ingredient = new Ingredient("Skladnik " + i);
+            recipe = new Recipe("Przepis " + i, "kategoria", "url", "imgUrl");
+            recipeRepository.save(recipe);
+            ingredientRepository.save(ingredient);
+            ingredient.setRecipes(Set.of(recipe));
+            recipe.setIngredients(Set.of(ingredient));
+            recipeRepository.save(recipe);
+            ingredientRepository.save(ingredient);
+        }
     }
 }

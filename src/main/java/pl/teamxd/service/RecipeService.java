@@ -2,6 +2,7 @@ package pl.teamxd.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.teamxd.model.Ingredient;
 import pl.teamxd.model.Recipe;
 import pl.teamxd.repository.RecipeRepository;
 
@@ -16,15 +17,13 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
-    public List<Recipe> getRecipesMatching(List<String> ingredients, String category){
+    public List<Recipe> getRecipesMatching(List<Ingredient> ingredients, String category){
         List<Recipe> recipes = recipeRepository.findAllByCategory(category);
         List<Recipe> result = new ArrayList<>();
-
         for (Recipe recipe : recipes){
             int matches = 0;
-            for (String ingredient : ingredients){
+            for (Ingredient ingredient : ingredients){
                 if (recipe.getIngredients().contains(ingredient)){
-                    System.out.println(recipe.getIngredients());
                     matches++;
                 }
             }
