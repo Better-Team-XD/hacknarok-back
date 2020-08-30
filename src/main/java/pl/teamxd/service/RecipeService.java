@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.teamxd.model.Ingredient;
 import pl.teamxd.model.Recipe;
+import pl.teamxd.model.request.RecipeGetRequest;
 import pl.teamxd.model.request.RecipeRequest;
 import pl.teamxd.repository.IngredientRepository;
 import pl.teamxd.repository.RecipeRepository;
@@ -35,9 +36,9 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
-    public List<Recipe> getRecipesMatching(List<Ingredient> ingredients, String category){
+    public List<RecipeGetRequest> getRecipesMatching(List<Ingredient> ingredients, String category){
         List<Recipe> recipes = recipeRepository.findAllByCategory(category);
-        List<Recipe> result = new ArrayList<>();
+        List<RecipeGetRequest> result = new ArrayList<>();
         for (Recipe recipe : recipes){
             int matches = 0;
             for (Ingredient ingredient : ingredients){
@@ -46,10 +47,13 @@ public class RecipeService {
                 }
             }
 
-            if  (Math.abs((double) (matches / recipe.getIngredients().size()) - 1) < 1e-10){
-                result.add(recipe);
+            if  (matches >= 1){
+                result.add(new RecipeGetRequest(recipe, matches, recipe.getIngredients().size()));
             }
         }
+
+        result.sort(Comparator.comparing(RecipeGetRequest::getMatches));
+        Collections.reverse(result);
         return result;
     }
 }
