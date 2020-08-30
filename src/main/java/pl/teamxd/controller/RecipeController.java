@@ -1,18 +1,22 @@
 package pl.teamxd.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.teamxd.model.request.RecipeRequest;
 import pl.teamxd.repository.RecipeRepository;
 import pl.teamxd.service.IngredientService;
 import pl.teamxd.service.RecipeService;
 
 @RestController
-@RequestMapping("/api/v1/recipe")
+@RequestMapping("/api/v1/recipes")
 @RequiredArgsConstructor
+@CrossOrigin
 public class RecipeController {
     private final RecipeService recipeService;
-    private final IngredientService ingredientService;
+
+    @PostMapping public void postRecipe(@RequestBody RecipeRequest recipeRequest) {
+        recipeService.addRecipe(recipeRequest);
+    }
 
 
 }

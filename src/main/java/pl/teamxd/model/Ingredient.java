@@ -27,6 +27,10 @@ public class Ingredient {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Recipe> recipes = new HashSet<>();
 
+    public void addRecipe(Recipe recipe){
+        this.recipes.add(recipe);
+    }
+
 
     @Override
     public boolean equals(Object o) {

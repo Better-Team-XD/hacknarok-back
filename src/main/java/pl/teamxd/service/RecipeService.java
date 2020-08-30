@@ -4,17 +4,36 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.teamxd.model.Ingredient;
 import pl.teamxd.model.Recipe;
+import pl.teamxd.model.request.RecipeRequest;
+import pl.teamxd.repository.IngredientRepository;
 import pl.teamxd.repository.RecipeRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class RecipeService {
     private final RecipeRepository recipeRepository;
+    private final IngredientRepository ingredientRepository;
 
-    public Recipe addRecipe(Recipe recipe) {
-        return recipeRepository.save(recipe);
+    public void addRecipe(RecipeRequest recipeRequest) {
+        Set<Ingredient> ingredients = new HashSet<>();
+        for (String string : recipeRequest.getIngredients()){
+            if (ingredientRepository.findByName(string).isPresent()){
+                ingredients.add(ingredientRepository.findByName(string).get());
+            } else {
+                ingredients.add(new Ingredient(string));
+            }
+        }
+        Recipe recipe = new Recipe(recipeRequest.getName(), recipeRequest.getCategory(), recipeRequest.getUrl(), recipeRequest.getImgUrl());
+        recipeRepository.save(recipe);
+        ingredients.forEach(ingredientRepository::save);
+        recipe.setIngredients(ingredients);
+        ingredients.forEach(ingredient -> ingredient.addRecipe(recipe));
+        recipe.setIngredients(ingredients);
+        recipeRepository.save(recipe);
+        ingredients.forEach(ingredientRepository::save);
     }
 
     public List<Recipe> getRecipesMatching(List<Ingredient> ingredients, String category){
