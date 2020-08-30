@@ -5,7 +5,6 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +14,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,16 +55,5 @@ public class Recipe {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, category, url, imgUrl);
-    }
-
-    @Override
-    public String toString() {
-        return "Recipe{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", url='" + url + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                '}';
     }
 }

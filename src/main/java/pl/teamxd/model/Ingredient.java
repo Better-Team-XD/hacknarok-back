@@ -14,6 +14,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,13 +44,5 @@ public class Ingredient {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }
