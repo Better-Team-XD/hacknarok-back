@@ -32,7 +32,6 @@ public class Ingredient {
         this.recipes.add(recipe);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

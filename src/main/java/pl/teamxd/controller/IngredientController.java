@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.teamxd.repository.RecipeRepository;
 import pl.teamxd.service.IngredientService;
-import pl.teamxd.service.RecipeService;
 
 @RestController
 @RequestMapping("/api/v1/ingredients")

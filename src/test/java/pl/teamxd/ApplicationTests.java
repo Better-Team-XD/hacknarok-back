@@ -10,5 +10,7 @@ class ApplicationTests {
     @Autowired
     RecipeService recipeService;
 
-
+    @Test
+    public void contextLoads() {
+    }
 }

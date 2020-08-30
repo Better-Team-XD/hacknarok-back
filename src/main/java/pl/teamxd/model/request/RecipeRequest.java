@@ -1,8 +1,6 @@
 package pl.teamxd.model.request;
 
-
 import lombok.*;
-
 import java.util.List;
 
 @Getter
