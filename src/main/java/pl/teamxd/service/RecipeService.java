@@ -48,12 +48,11 @@ public class RecipeService {
             }
 
             if  (matches >= 1){
-                result.add(new RecipeGetRequest(recipe, matches, recipe.getIngredients().size()));
+                result.add(new RecipeGetRequest(recipe, Math.abs(matches - recipe.getIngredients().size())));
             }
         }
 
-        result.sort(Comparator.comparing(RecipeGetRequest::getMatches));
-        Collections.reverse(result);
+        result.sort(Comparator.comparing(RecipeGetRequest::getMissing));
         return result;
     }
 }

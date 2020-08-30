@@ -15,15 +15,13 @@ public class RecipeGetRequest {
     private String category;
     private String url;
     private String imgUrl;
-    private Integer matches;
-    private Integer total;
+    private Integer missing;
 
-    public RecipeGetRequest(Recipe recipe, Integer matches, Integer total){
+    public RecipeGetRequest(Recipe recipe, Integer missing){
         name = recipe.getName();
         category = recipe.getCategory();
         url = recipe.getUrl();
         imgUrl = recipe.getImgUrl();
-        this.matches = matches;
-        this.total = total;
+        this.missing = missing;
     }
 }
